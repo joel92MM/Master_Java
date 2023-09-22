@@ -1,4 +1,7 @@
+package es.joelmeneses.ejercicios.factura;
+
 import java.util.Scanner;
+
 /*
 
 La tarea consiste en crear una nueva clase con el método main llamada DetalleDeFactura, se requiere desarrollar un programa que reciba datos de la factura utilizando la clase Scanner de la siguiente manera:
@@ -13,8 +16,7 @@ La tarea consiste en crear una nueva clase con el método main llamada DetalleDe
 
 */
 
-
-public class DetalleDeFactura {
+public class Factura {
     public static void main(String[] args) {
         Scanner teclado = new Scanner(System.in);
 
@@ -22,11 +24,11 @@ public class DetalleDeFactura {
         System.out.println("Ingrese el nombre de la factura: ");
         String nombre = teclado.nextLine();
         //Precio1
-        System.out.println("Ingrese el primer precio: ");
+        System.out.println("Ingrese precio de el primer precio: ");
         double precio1 = teclado.nextDouble();
 
         //Precio2
-        System.out.println("Ingrese el segundo precio: ");
+        System.out.println("Ingrese precio de el segundo precio: ");
         double precio2 = teclado.nextDouble();
 
         //Suma total
