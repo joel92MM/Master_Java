@@ -16,7 +16,6 @@ import javax.swing.JOptionPane;
 public class UsuarioMenu {
 
     private final UsuarioServicioImpl usuarioServicio = new UsuarioServicioImpl();
-    private  final Conexion connection = null ;
     public void iniciarMenu() {
         Scanner sc = new Scanner(System.in);
         int opcion;
@@ -40,7 +39,6 @@ public class UsuarioMenu {
             case 1:
                 System.out.println("Obteniendo usuarios...");
                 usuarioServicio.obtenerTodos();
-                connection.cerrarConexion(connection.obtenerConexion());
                 break;
             case 2:
                 System.out.println("Insertando usuario...");
