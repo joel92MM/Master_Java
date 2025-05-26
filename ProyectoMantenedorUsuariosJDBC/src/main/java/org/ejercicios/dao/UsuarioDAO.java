@@ -8,7 +8,7 @@ public interface UsuarioDAO {
 
     void save(Usuario usuario);
     void update(Usuario usuario);
-    void delete(Usuario usuario);
+    void delete(String email);
     boolean existe(String email);
     List<Usuario> listar();
     Usuario findById(int id);

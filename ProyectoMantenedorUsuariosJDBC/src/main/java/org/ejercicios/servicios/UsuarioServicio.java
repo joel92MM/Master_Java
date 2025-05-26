@@ -7,9 +7,9 @@ public interface UsuarioServicio {
 
      void insertar(Usuario usuario);
      void actualizar(Usuario usuario);
-     void eliminar(int id);
+     void eliminar(String email);
      List<Usuario> obtenerTodos();
-     boolean existe(Usuario usuario);
+     boolean existe(String email);
      
 
 }

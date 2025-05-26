@@ -34,17 +34,52 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
     @Override
     public void update(Usuario usuario) {
+        Conexion conexion=new Conexion();
 
+        StringBuilder consulta = new StringBuilder("UPDATE usuarios SET ");
+        boolean comma = false;
+
+        if (usuario.getNombreusuario() != null && !usuario.getNombreusuario().isEmpty()) {
+            consulta.append("nombreusuario = ?");
+            comma = true;
+        }
+        if (usuario.getPassword() != null && !usuario.getPassword().isEmpty()) {
+            if (comma) consulta.append(", ");
+            consulta.append("password = ?");
+            comma = true;
+        }
+
+        consulta.append(" WHERE email = ?");
+
+        try (PreparedStatement statement = conexion.obtenerConexion().prepareStatement(consulta.toString())) {
+            int index = 1;
+            if (usuario.getNombreusuario() != null && !usuario.getNombreusuario().isEmpty()) {
+                statement.setString(index++, usuario.getNombreusuario());
+            }
+            if (usuario.getPassword() != null && !usuario.getPassword().isEmpty()) {
+                statement.setString(index++, usuario.getPassword());
+            }
+            statement.setString(index, usuario.getEmail());
+
+            int filas = statement.executeUpdate();
+            if (filas == 0) {
+                throw new RuntimeException("No se encontró usuario con email: " + usuario.getEmail());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error al actualizar el usuario", e);
+        } finally {
+            conexion.cerrarConexion(conexion.obtenerConexion());
+        }
     }
 
     @Override
-    public void delete(Usuario usuario) {
+    public void delete(String email) {
         Conexion conexion=new Conexion();
-        String consulta="DELETE FROM usuarios WHERE id = ?";
+        String consulta="DELETE FROM usuarios WHERE email = ?";
 
         try (PreparedStatement statement = conexion.obtenerConexion().prepareStatement(consulta)) {
 
-            statement.setInt(1, usuario.getId());
+            statement.setString(1, email);
 
             statement.executeUpdate();
 
@@ -93,7 +128,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     public boolean existe(String email) {
         Conexion conexion=new Conexion();
         String consulta="Select count(*) from usuarios where email = ?";
-        int count=0;
+        boolean existe = false;
 
         try (PreparedStatement statement = conexion.obtenerConexion().prepareStatement(consulta)) {
 
@@ -101,14 +136,15 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                count=resultSet.getInt(1)>0;
+                existe=resultSet.getInt(1)>0;
             }
 
         } catch (Exception e) {
             throw new RuntimeException("Error usuario no encontrado", e);
+        }finally {
+            conexion.cerrarConexion( conexion.obtenerConexion());
         }
-        conexion.cerrarConexion( conexion.obtenerConexion());
-        return false;
+        return existe;
     }
 
 

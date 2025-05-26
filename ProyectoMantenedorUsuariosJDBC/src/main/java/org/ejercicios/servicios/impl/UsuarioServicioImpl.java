@@ -13,19 +13,25 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 
     @Override
     public void insertar(Usuario usuario) {
+
         usuarioDAO.save(usuario);
     }
 
 
     @Override
     public void actualizar(Usuario usuario) {
-
+        if (!existe(usuario.getEmail())) {
+            System.out.println("El usuario con email " + usuario.getEmail() + " no existe\n\t");
+            return;
+        }
+        usuarioDAO.update(usuario);
+        System.out.println("Se actualizo el usuario correctamente\n\t");
     }
 
     @Override
-    public void eliminar(Usuario usuario) {
-        if (existe(usuario)) {
-            usuarioDAO.delete(usuario);
+    public void eliminar(String email) {
+        if (existe(email)) {
+            usuarioDAO.delete(email);
             System.out.println("Se elimino el usuario correctamente\n\t");
         } else {
             System.out.println("El usuario no existe\n\t");
@@ -38,8 +44,8 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     }
 
     @Override
-    public boolean existe(Usuario usuario) {
-        return usuarioDAO.existe(usuario.getEmail());
+    public boolean existe(String email) {
+        return usuarioDAO.existe(email);
     }
 
 }
