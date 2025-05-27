@@ -4,7 +4,8 @@ import org.ejercicios.usuarios.proyectomantenedorusuariosjdbc_v2.dto.UsuarioDTO;
 import org.ejercicios.usuarios.proyectomantenedorusuariosjdbc_v2.entity.Usuario;
 import org.mapstruct.*;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        componentModel = MappingConstants.ComponentModel.SPRING)
 public interface UsuarioMapper {
     Usuario toEntity(UsuarioDTO usuarioDTO);
 
