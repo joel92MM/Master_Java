@@ -11,10 +11,11 @@ public interface UsuarioServicio {
 
     void crearUsuario(UsuarioDTO usuarioDTO);
 
-    void actualizarUsuario(UsuarioDTO usuarioDTO);
+    String actualizarUsuario(UsuarioDTO usuarioDTO);
 
-    void eliminarUsuario(Integer id);
+    String eliminarUsuario(Integer id);
 
     UsuarioDTO buscarEmail(String email);
 
+    boolean existsByEmail(String email);
 }
